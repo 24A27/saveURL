@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const nameInput = document.getElementById('nameInput');
     const urlInput = document.getElementById('urlInput');
     const addUrlButton = document.getElementById('addUrlButton');
     const urlList = document.getElementById('urlList');
@@ -64,12 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // URLリストを表示する関数
     function renderUrls() {
         urlList.innerHTML = ''; // 一度リストをクリア
-        urls.forEach((url, index) => {
+        urls.forEach((item, index) => {
             const listItem = document.createElement('li');
 
+            // 名前を表示する要素
+            const nameSpan = document.createElement('span');
+            nameSpan.classList.add('url-name');
+            nameSpan.textContent = item.name || 'No Name';
+
             const urlLink = document.createElement('a');
-            urlLink.href = url;
-            urlLink.textContent = url;
+            urlLink.href = item.url;
+            urlLink.textContent = item.url;
             urlLink.target = "_blank"; // 新しいタブで開く
 
             const deleteButton = document.createElement('button');
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteUrl(index);
             });
 
+            listItem.appendChild(nameSpan);
             listItem.appendChild(urlLink);
             listItem.appendChild(deleteButton);
             urlList.appendChild(listItem);
@@ -87,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // URLを追加する関数
     function addUrl() {
+        const name = nameInput.value.trim();
         const url = urlInput.value.trim();
         if (url) {
             // URLの形式を簡易的にチェック
@@ -96,8 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            urls.push(url);
+            urls.push({ name: name, url: url });
             localStorage.setItem('urls', JSON.stringify(urls)); // ローカルストレージに保存
+            nameInput.value = ''; // 入力欄をクリア
             urlInput.value = ''; // 入力欄をクリア
             renderUrls(); // リストを再描画
         } else {
@@ -117,6 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // EnterキーでもURLを追加できるようにする
     urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addUrl();
+        }
+    });
+
+    nameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             addUrl();
         }
