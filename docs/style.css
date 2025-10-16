@@ -74,24 +74,28 @@ h1, h2 {
     margin-bottom: 8px;
     border-radius: 4px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* 縦方向に配置 */
     word-break: break-all; /* 長いURLの折り返し */
-    gap: 10px; /* 要素間のスペース */
+    gap: 8px; /* 要素間のスペース */
 }
 
 .url-list-section li .url-name {
     font-weight: bold;
     color: #333;
-    min-width: 100px;
-    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.url-list-section li .url-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .url-list-section li a {
     color: #007bff;
     text-decoration: none;
+    word-break: break-all; /* 長いURLを折り返す */
     flex-grow: 1;
-    margin-right: 10px;
 }
 
 .url-list-section li a:hover {
@@ -106,6 +110,7 @@ h1, h2 {
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    flex-shrink: 0; /* ボタンが縮小しないようにする */
 }
 
 .url-list-section li .delete-button:hover {

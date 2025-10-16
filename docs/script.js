@@ -73,6 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
             nameSpan.classList.add('url-name');
             nameSpan.textContent = item.name || 'No Name';
 
+            // URLと削除ボタンを含む行を作成
+            const urlRow = document.createElement('div');
+            urlRow.classList.add('url-row');
+
             const urlLink = document.createElement('a');
             urlLink.href = item.url;
             urlLink.textContent = item.url;
@@ -85,9 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 deleteUrl(index);
             });
 
+            // URLと削除ボタンを同じ行に追加
+            urlRow.appendChild(urlLink);
+            urlRow.appendChild(deleteButton);
+
+            // リストアイテムに名前とURL行を追加
             listItem.appendChild(nameSpan);
-            listItem.appendChild(urlLink);
-            listItem.appendChild(deleteButton);
+            listItem.appendChild(urlRow);
             urlList.appendChild(listItem);
         });
     }
